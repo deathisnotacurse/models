@@ -68,6 +68,7 @@ import reader
 import util
 
 from tensorflow.python.client import device_lib
+from lstm_cell import BasicLSTMCell
 
 flags = tf.flags
 logging = tf.logging
@@ -200,9 +201,10 @@ class PTBModel(object):
 
   def _get_lstm_cell(self, config, is_training):
     if config.rnn_mode == BASIC:
-      return tf.contrib.rnn.BasicLSTMCell(
-          config.hidden_size, forget_bias=0.0, state_is_tuple=True,
-          reuse=not is_training)
+      #return tf.contrib.rnn.BasicLSTMCell(
+      #    config.hidden_size, forget_bias=0.0, state_is_tuple=True,
+      #    reuse=not is_training)
+      return BasicLSTMCell(config.hidden_size, forget_bias=0.0, state_is_tuple=True)
     if config.rnn_mode == BLOCK:
       return tf.contrib.rnn.LSTMBlockCell(
           config.hidden_size, forget_bias=0.0)
